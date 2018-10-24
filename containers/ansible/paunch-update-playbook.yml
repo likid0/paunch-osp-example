@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  gather_facts: yes
+  vars:
+    nova_api_ver: '13.4'
+  tasks:
+
+  - name: "[ NOVA ][ Configuraton ] Update Paunch YAML config file"
+    template:
+      src: "templates/{{ item }}.j2"
+      dest: "/containers/paunchconf/{{ item }}"
+    with_items:
+      - paunch_nova.yml
+    notify: update_paunch
+
+
+  - name: "[ NOVA ][ Configuraton ] Configure nova conf files"
+    template:
+      src: "templates/{{ item }}.j2"
+      dest: "/containers/ospconf/nova/etc/nova/{{ item }}"
+    with_items: 
+      - nova.conf
+      - policy.json
+      - api-paste.ini
+    notify: update_paunch
+
+  handlers:
+      - name: update_paunch
+        import_tasks: tasks/update_paunch.yaml

@@ -1,0 +1,21 @@
+---
+- name: "[ Paunch ] update paunch config yml file"
+  lineinfile:
+    path: "{{ item }}"
+    regexp: '.*UPDATE_ID.*'
+    insertafter: '.*environment.*'
+    line: '  - UPDATE_ID={{ ansible_date_time.iso8601_basic_short }}'
+    state: present
+  with_items:
+    - /containers/ansible/templates/paunch_nova.yml.j2
+    - /containers/paunchconf/paunch_nova.yml
+
+
+- name: "[ Paunch ] paunch apply "
+  command: "paunch -v apply --file /containers/paunchconf/paunch_nova.yml --config-id test"
+  register: paunchrun
+
+- name: "[ Pauch ] save verbose paunch output to logfile"
+  copy:
+    content: "{{ paunchrun.stderr }}"
+    dest: "./paunch.log"

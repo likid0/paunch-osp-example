@@ -1,0 +1,37 @@
+$ docker inspect --type image --format exists osp13:5001/registry.access.redhat.com/rhosp13/openstack-nova-api:13.4
+exists
+
+
+$ docker ps -a --filter label=managed_by=paunch --filter label=config_id=test --format {{.Names}} {{.Label "container_name"}}
+nova_api nova_api
+
+
+$ docker inspect --type container --format {{index .Config.Labels "config_data"}} nova_api
+{"start_order": 2, "healthcheck": {"test": "/openstack/healthcheck"}, "image": "osp13:5001/registry.access.redhat.com/rhosp13/openstack-nova-api:13.59", "environment": ["UPDATE_ID=20181022T025041", "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS"], "user": "root", "volumes": ["/etc/hosts:/etc/hosts:ro", "/etc/localtime:/etc/localtime:ro", "/etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro", "/etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro", "/etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro", "/etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro", "/dev/log:/dev/log", "/etc/ssh/ssh_known_hosts:/etc/ssh/ssh_known_hosts:ro", "/etc/puppet:/etc/puppet:ro", "/var/log/containers/nova:/var/log/nova", "/var/log/containers/httpd/nova-api:/var/log/httpd", "/containers/kollaconf/nova_api.json:/var/lib/kolla/config_files/config.json:ro", "/containers/ospconf/nova/:/var/lib/kolla/config_files/src:ro", "", ""], "net": "host", "privileged": true, "restart": "always"}
+
+
+Deleting container (changed config_data): nova_api
+$ docker rm -f nova_api
+nova_api
+
+
+$ docker ps -a --filter label=managed_by=paunch --format {{.Names}} {{.Label "container_name"}}
+
+
+$ docker ps -a --filter label=managed_by=paunch --filter label=config_id=test --format {{.Names}} {{.Label "container_name"}}
+
+
+Running container: nova_api
+$ docker inspect --type container --format exists nova_api
+
+
+Error: No such container: nova_api
+
+$ docker run --name nova_api --label config_id=test --label container_name=nova_api --label managed_by=paunch --label config_data={"start_order": 2, "healthcheck": {"test": "/openstack/healthcheck"}, "image": "osp13:5001/registry.access.redhat.com/rhosp13/openstack-nova-api:13.4", "environment": ["UPDATE_ID=20181022T025140", "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS"], "user": "root", "volumes": ["/etc/hosts:/etc/hosts:ro", "/etc/localtime:/etc/localtime:ro", "/etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro", "/etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro", "/etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro", "/etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro", "/dev/log:/dev/log", "/etc/ssh/ssh_known_hosts:/etc/ssh/ssh_known_hosts:ro", "/etc/puppet:/etc/puppet:ro", "/var/log/containers/nova:/var/log/nova", "/var/log/containers/httpd/nova-api:/var/log/httpd", "/containers/kollaconf/nova_api.json:/var/lib/kolla/config_files/config.json:ro", "/containers/ospconf/nova/:/var/lib/kolla/config_files/src:ro", "", ""], "net": "host", "privileged": true, "restart": "always"} --detach=true --env=UPDATE_ID=20181022T025140 --env=KOLLA_CONFIG_STRATEGY=COPY_ALWAYS --net=host --health-cmd=/openstack/healthcheck --privileged=true --restart=always --user=root --volume=/etc/hosts:/etc/hosts:ro --volume=/etc/localtime:/etc/localtime:ro --volume=/etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro --volume=/etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro --volume=/etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro --volume=/etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro --volume=/dev/log:/dev/log --volume=/etc/ssh/ssh_known_hosts:/etc/ssh/ssh_known_hosts:ro --volume=/etc/puppet:/etc/puppet:ro --volume=/var/log/containers/nova:/var/log/nova --volume=/var/log/containers/httpd/nova-api:/var/log/httpd --volume=/containers/kollaconf/nova_api.json:/var/lib/kolla/config_files/config.json:ro --volume=/containers/ospconf/nova/:/var/lib/kolla/config_files/src:ro osp13:5001/registry.access.redhat.com/rhosp13/openstack-nova-api:13.4
+887b24ea03413a4187cd2fc7e28f620dffe71888bb6b7ea425dfd777da1d4701
+
+
+Completed $ docker run --name nova_api --label config_id=test --label container_name=nova_api --label managed_by=paunch --label config_data={"start_order": 2, "healthcheck": {"test": "/openstack/healthcheck"}, "image": "osp13:5001/registry.access.redhat.com/rhosp13/openstack-nova-api:13.4", "environment": ["UPDATE_ID=20181022T025140", "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS"], "user": "root", "volumes": ["/etc/hosts:/etc/hosts:ro", "/etc/localtime:/etc/localtime:ro", "/etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro", "/etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro", "/etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro", "/etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro", "/dev/log:/dev/log", "/etc/ssh/ssh_known_hosts:/etc/ssh/ssh_known_hosts:ro", "/etc/puppet:/etc/puppet:ro", "/var/log/containers/nova:/var/log/nova", "/var/log/containers/httpd/nova-api:/var/log/httpd", "/containers/kollaconf/nova_api.json:/var/lib/kolla/config_files/config.json:ro", "/containers/ospconf/nova/:/var/lib/kolla/config_files/src:ro", "", ""], "net": "host", "privileged": true, "restart": "always"} --detach=true --env=UPDATE_ID=20181022T025140 --env=KOLLA_CONFIG_STRATEGY=COPY_ALWAYS --net=host --health-cmd=/openstack/healthcheck --privileged=true --restart=always --user=root --volume=/etc/hosts:/etc/hosts:ro --volume=/etc/localtime:/etc/localtime:ro --volume=/etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro --volume=/etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro --volume=/etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro --volume=/etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro --volume=/dev/log:/dev/log --volume=/etc/ssh/ssh_known_hosts:/etc/ssh/ssh_known_hosts:ro --volume=/etc/puppet:/etc/puppet:ro --volume=/var/log/containers/nova:/var/log/nova --volume=/var/log/containers/httpd/nova-api:/var/log/httpd --volume=/containers/kollaconf/nova_api.json:/var/lib/kolla/config_files/config.json:ro --volume=/containers/ospconf/nova/:/var/lib/kolla/config_files/src:ro osp13:5001/registry.access.redhat.com/rhosp13/openstack-nova-api:13.4
+stdout: 887b24ea03413a4187cd2fc7e28f620dffe71888bb6b7ea425dfd777da1d4701
+
+stderr: 

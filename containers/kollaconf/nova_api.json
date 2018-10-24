@@ -1,0 +1,18 @@
+{
+  "permissions": [
+    {
+      "recurse": true,
+      "path": "/var/log/nova",
+      "owner": "nova:nova"
+    }
+  ],
+  "command": "/usr/sbin/httpd -DFOREGROUND",
+  "config_files": [
+    {
+      "merge": true,
+      "preserve_properties": true,
+      "source": "/var/lib/kolla/config_files/src/*",
+      "dest": "/"
+    }
+  ]
+}
